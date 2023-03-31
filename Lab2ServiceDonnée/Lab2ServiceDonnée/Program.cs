@@ -30,7 +30,7 @@ app.Run();
 
 /*
     CREATE VIEW view_etu_cours AS
-    SELECT etu_code_permanent,etu_nom,etu_prenom, cou_sigle, cou_titre, cou_duree FROM tp5_etudiant 
+    SELECT etu_code_permanent, etu_nom, etu_prenom, etu_date_naissance, etu_date_inscription, etu_date_diplome, etu_num_da, cou_sigle, cou_titre, cou_duree FROM tp5_etudiant 
     Join tp5_etudiant_courssessiongroupeprof 
     On tp5_etudiant.etu_code_permanent = tp5_etudiant_courssessiongroupeprof.ecsgp_etu_codepermanent
     Join tp5_cours_session_groupe_prof

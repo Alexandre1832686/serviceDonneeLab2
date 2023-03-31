@@ -11,37 +11,21 @@ namespace Lab2ServiceDonnée.Controllers
     public class monController : Controller
     {
         private readonly ILogger<monController> _logger;
+        DAL dal = new DAL();
+        StudentFactory StudentFacto;
+        CourFactory CourFacto;
 
         public monController(ILogger<monController> logger)
         {
             _logger = logger;
+            InitialiseFacto();
         }
 
         [HttpGet]
-        [Route("GetNomStudents")]
-
-        public List<string> GetNomStudents()
-        {
-            DAL dal = new DAL();
-            StudentFactory facto = dal.StudentFactory;
-            List<Student> list = facto.GetAll();
-            List<string> retour = new List<string>();
-            foreach(Student s in list)
-            {
-                retour.Add(s.Nom);
-            }
-            return retour;
-        }
-
-
-        [HttpGet]
-        [Route("GetCourByCodePerma/{codePerma}")]
-
+        [Route("GetNomStudentByCodePerma/{codePerma}")]
         public string GetNomStudentByCodePerma(string codePerma)
         {
-            DAL dal = new DAL();
-            StudentFactory facto = dal.StudentFactory;
-            return facto.Get(codePerma).Nom;
+            return StudentFacto.Get(codePerma).Nom;
         }
 
         [HttpGet]
@@ -49,9 +33,22 @@ namespace Lab2ServiceDonnée.Controllers
 
         public List<Cour> GetCoursByCodePerma(string codePerma)
         {
-            DAL dal = new DAL();
-            CourFactory facto = dal.CourFactory;
-            return facto.listeCour(codePerma);
+            
+            
+            return CourFacto.listeCour(codePerma);
+        }
+        [HttpGet]
+        [Route("GetNomStudentsParCours/{nomCours}")]
+
+        public List<Student> GetNomStudentsParCours(string nomCours)
+        {
+            return( StudentFacto.GetStudentParCours(nomCours));
+        }
+
+        void InitialiseFacto()
+        {
+            CourFacto = dal.CourFactory;
+            StudentFacto = dal.StudentFactory;
         }
     }
 }

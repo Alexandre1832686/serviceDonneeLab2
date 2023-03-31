@@ -87,7 +87,36 @@ namespace Lab2ServiceDonnée.DataAccessLayer.factories
 
             return Student;
         }
+        public List<Student> GetStudentParCours(string cours)
+        {
+            List<Student> Students = new List<Student>();
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
-        
+            try
+            {
+                mySqlCnn = new MySqlConnection(DAL.ConnectionString);
+                mySqlCnn.Open();
+
+                MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
+                mySqlCmd.CommandText = "SELECT * FROM view_etu_cours_actif WHERE cou_titre = @cours";
+                mySqlCmd.Parameters.AddWithValue("@cours", cours);
+
+                mySqlDataReader = mySqlCmd.ExecuteReader();
+                while (mySqlDataReader.Read())
+                {
+                    Student Student = CreateFromReader(mySqlDataReader);
+                    Students.Add(Student);
+                }
+            }
+            finally
+            {
+                mySqlDataReader?.Close();
+                mySqlCnn?.Close();
+            }
+
+            return Students;
+        }
+
     }
 }
