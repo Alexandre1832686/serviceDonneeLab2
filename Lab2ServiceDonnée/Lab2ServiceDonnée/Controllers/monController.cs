@@ -14,6 +14,7 @@ namespace Lab2ServiceDonnée.Controllers
         DAL dal = new DAL();
         StudentFactory StudentFacto;
         CourFactory CourFacto;
+        BuletinFactory BuletinFacto;
 
         public monController(ILogger<monController> logger)
         {
@@ -37,18 +38,96 @@ namespace Lab2ServiceDonnée.Controllers
             
             return CourFacto.listeCour(codePerma);
         }
+
         [HttpGet]
         [Route("GetNomStudentsParCours/{nomCours}")]
-
         public List<Student> GetNomStudentsParCours(string nomCours)
         {
             return( StudentFacto.GetStudentParCours(nomCours));
+        }
+        [HttpGet]
+        [Route("GetCoursEnseignant/{PrenomEnseignant}/{NomEnseignant}")]
+        public List<Cour> GetCoursEnseignant(string PrenomEnseignant, string NomEnseignant)
+        {
+            return (CourFacto.listeCourEnseignant(PrenomEnseignant, NomEnseignant));
+        }
+
+        [HttpGet]
+        [Route("BuletinÉtudiant/{PrenomÉtu}/{NomÉtu}")]
+        public List<Buletin> BuletinÉtudiant(string PrenomÉtu, string NomÉtu)
+        {
+            return (BuletinFacto.GetBuletin(PrenomÉtu, NomÉtu));
+        }
+
+        [HttpGet]
+        [Route("DiplomeParAnnee/{Annee}")]
+        public List<Student> DiplomeParAnnee(int Annee)
+        {
+            return (StudentFacto.GetDiplome(Annee));
+        }
+
+        [HttpPost]
+        [Route("CreerCour/{sigle}/{titre}/{duree}")]
+        public string CreerCour(string sigle, string titre, int duree) 
+        {
+            if(CourFacto.CreateCour( sigle,  titre,  duree))
+            {
+                return "Créé avec succès";
+            }
+            else
+            {
+                return "Problème de création";
+            }
+        }
+
+
+        [HttpPut]
+        [Route("AjoutEtuACour/{PrenomEnseignant}/{NomEnseignant}/{Sigle}")]
+        public string AjoutEtuACour( string PrenomEnseignant, string NomEnseignant, string Sigle)
+        {
+            if (CourFacto.ModifieProfCour(PrenomEnseignant, NomEnseignant, Sigle))
+            {
+                return "Modifié avec succès";
+            }
+            else
+            {
+                return "Problème de modification";
+            }
+        }
+
+        [HttpPut]
+        [Route("ModifierNote/{Prenom}/{Nom}/{Note}/{Sigle}/{Session}")]
+        public string ModifierNote(string Prenom, string Nom, int Note,string Sigle,int Session)
+        {
+            if (CourFacto.ModifieNote(Prenom, Nom, Note, Sigle, Session))
+            {
+                return "Modifié avec succès";
+            }
+            else
+            {
+                return "Problème de modification";
+            }
+        }
+
+        [HttpDelete]
+        [Route("DeleteEtuFromCours/{Prenom}/{Nom}/{Sigle}/{Session}")]
+        public string DeleteEtuFromCours(string Prenom, string Nom, string Sigle, int Session)
+        {
+            if (CourFacto.DeleteEtuCour(Prenom, Nom, Sigle, Session))
+            {
+                return "Modifié avec succès";
+            }
+            else
+            {
+                return "Problème de modification";
+            }
         }
 
         void InitialiseFacto()
         {
             CourFacto = dal.CourFactory;
             StudentFacto = dal.StudentFactory;
+            BuletinFacto = dal.BuletinFactory;
         }
     }
 }

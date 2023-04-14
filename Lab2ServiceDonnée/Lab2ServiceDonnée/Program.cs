@@ -1,4 +1,4 @@
-using Lab2ServiceDonnée.DataAccessLayer;
+using Lab2ServiceDonnÃ©e.DataAccessLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 DAL.ConnectionString = builder.Configuration.GetConnectionString("Default");
