@@ -26,7 +26,11 @@ namespace Lab2ServiceDonnée.Controllers
         [Route("GetNomStudentByCodePerma/{codePerma}")]
         public string GetNomStudentByCodePerma(string codePerma)
         {
-            return StudentFacto.Get(codePerma).Nom;
+            Student s = StudentFacto.Get(codePerma);
+            if (s != null)
+                return s.Nom;
+            else
+                return "Code permanant invalide";
         }
 
         [HttpGet]

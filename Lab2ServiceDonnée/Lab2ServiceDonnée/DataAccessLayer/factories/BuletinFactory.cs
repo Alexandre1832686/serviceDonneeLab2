@@ -16,10 +16,7 @@ namespace Lab2ServiceDonnée.DataAccessLayer.factories
          */
 
 
-
-
-
-        private Buletin CreateFromReader(MySqlDataReader mySqlDataReader)
+        internal Buletin CreateFromReader(MySqlDataReader mySqlDataReader)
         {
             //var
             int note = -1;
@@ -36,6 +33,7 @@ namespace Lab2ServiceDonnée.DataAccessLayer.factories
             //creer et renvoie le buletin
             return new Buletin(new Cour(sigle,titre,duree),note);
         }
+
         public List<Buletin> GetBuletin(string prenom, string nom)
         {
             //var

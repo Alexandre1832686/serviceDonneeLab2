@@ -65,7 +65,7 @@ namespace Lab2ServiceDonnée.DataAccessLayer.factories
                 mySqlCnn = new MySqlConnection(DAL.ConnectionString);
                 mySqlCnn.Open();
                 MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
-                mySqlCmd.CommandText = "SELECT * FROM view_etu_cours WHERE etu_code_permanent = @codePerma";
+                mySqlCmd.CommandText = "SELECT * FROM view_etu_cours_actif WHERE etu_code_permanent = @codePerma";
                 mySqlCmd.Parameters.AddWithValue("@codePerma", codePerma);
 
                 //execution et lecture
@@ -138,15 +138,19 @@ namespace Lab2ServiceDonnée.DataAccessLayer.factories
                 mySqlCnn.Open();
                 MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
                 mySqlCmd.CommandText = "INSERT INTO tp5_cours (cou_sigle,  cou_titre,  cou_duree) VALUES (@sigle, @titre, @duree); ";
+                
                 mySqlCmd.Parameters.AddWithValue("@sigle", sigle);
                 mySqlCmd.Parameters.AddWithValue("@titre", titre);
                 mySqlCmd.Parameters.AddWithValue("@duree", duree);
 
                 //execution
                 int check = mySqlCmd.ExecuteNonQuery();
+
                 if (check > 0)
                 {
                     //si l'execution à modifier des lignes, retourne true
+                    // fermeture
+                    mySqlCnn?.Close();
                     return true;
                 }
                 

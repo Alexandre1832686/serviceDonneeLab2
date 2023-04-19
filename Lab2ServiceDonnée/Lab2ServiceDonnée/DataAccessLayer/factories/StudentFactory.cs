@@ -114,7 +114,7 @@ namespace Lab2ServiceDonnée.DataAccessLayer.factories
                 mySqlCnn.Open();
                 MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
                 mySqlCmd.CommandText = "SELECT * FROM view_etu_cours_actif WHERE cou_titre = @cours";
-                mySqlCmd.Parameters.AddWithValue("@cours", cours);
+                mySqlCmd.Parameters.AddWithValue("@cours",cours);
 
                 //execute et lie
                 mySqlDataReader = mySqlCmd.ExecuteReader();
