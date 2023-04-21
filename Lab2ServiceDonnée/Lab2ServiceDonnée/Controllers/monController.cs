@@ -15,11 +15,41 @@ namespace Lab2ServiceDonnée.Controllers
         StudentFactory StudentFacto;
         CourFactory CourFacto;
         BuletinFactory BuletinFacto;
+        ApiKeyfactory ApiKeyFacto;
 
         public monController(ILogger<monController> logger)
         {
             _logger = logger;
             InitialiseFacto();
+        }
+
+        [HttpGet]
+        [Route("CheckApiKey/{Key}")]
+        public bool CheckApiKey(string Key)
+        {
+            return ApiKeyFacto.checkApiKey(Key);
+        }
+
+        [HttpPut]
+        [Route("GenerateApiKey")]
+        public string GenerateApiKey()
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[12];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            bool check = ApiKeyFacto.GenerateApiKey(new String(stringChars));
+
+            if (check)
+                return new String(stringChars);
+            else
+                return "Un problème est survenu";
+            
         }
 
         [HttpGet]
@@ -132,6 +162,7 @@ namespace Lab2ServiceDonnée.Controllers
             CourFacto = dal.CourFactory;
             StudentFacto = dal.StudentFactory;
             BuletinFacto = dal.BuletinFactory;
+            ApiKeyFacto = dal.ApiKeyfactory;
         }
     }
 }

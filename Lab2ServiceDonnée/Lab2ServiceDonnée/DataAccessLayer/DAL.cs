@@ -8,6 +8,7 @@ namespace Lab2ServiceDonnée.DataAccessLayer
         private StudentFactory? _studentFact = null;
         private CourFactory? _courFactory = null;
         private BuletinFactory? _buletinFactory= null;
+        private ApiKeyfactory? _apiKeyfactory = null;
         public static string? ConnectionString { get; set; }
 
         //public var avec le SET
@@ -46,6 +47,18 @@ namespace Lab2ServiceDonnée.DataAccessLayer
                 }
 
                 return _buletinFactory;
+            }
+        }
+        public ApiKeyfactory ApiKeyfactory
+        {
+            get
+            {
+                if (_apiKeyfactory == null)
+                {
+                    _apiKeyfactory = new ApiKeyfactory();
+                }
+
+                return _apiKeyfactory;
             }
         }
 
