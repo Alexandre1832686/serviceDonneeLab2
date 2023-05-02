@@ -1,6 +1,7 @@
 ﻿using Lab2ServiceDonnée.Model;
 using MySql.Data.MySqlClient;
 
+
 namespace Lab2ServiceDonnée.DataAccessLayer.factories
 {
     public class CourFactory
@@ -165,12 +166,13 @@ namespace Lab2ServiceDonnée.DataAccessLayer.factories
             return false;
         }
 
-        public bool AddEtuToCour(string CodePerma, string Sigle)
+        public bool AddEtuToCour(string prenom, string nom, string Sigle)
         {
             //var
             MySqlConnection? mySqlCnn = null;
             MySqlDataReader? mySqlDataReader = null;
             string id ="";
+            string codePerma = "";
 
             try
             {
@@ -198,6 +200,33 @@ namespace Lab2ServiceDonnée.DataAccessLayer.factories
                 mySqlCnn?.Close();
             }
 
+
+            try
+            {
+                //preparation
+                mySqlCnn = new MySqlConnection(DAL.ConnectionString);
+                mySqlCnn.Open();
+                MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
+                mySqlCmd.CommandText = "SELECT etu_code_permanent FROM tp5_etudiant WHERE etu_nom = @nom AND etu_prenom = @prenom;";
+                mySqlCmd.Parameters.AddWithValue("@prenom", prenom);
+                mySqlCmd.Parameters.AddWithValue("@nom", nom);
+
+                //execution et lecture
+                mySqlDataReader = mySqlCmd.ExecuteReader();
+                while (mySqlDataReader.Read())
+                {
+                    //set la variable code
+                    codePerma = mySqlDataReader["etu_code_permanent"].ToString() ?? string.Empty;
+                }
+
+            }
+            finally
+            {
+                //fermeture reader et connection
+                mySqlDataReader?.Close();
+                mySqlCnn?.Close();
+            }
+
             try
             {
                 //var
@@ -215,15 +244,20 @@ namespace Lab2ServiceDonnée.DataAccessLayer.factories
 
                 //preparation
                 mySqlCmd.Parameters.AddWithValue("@ecsgp_csgp_id", result);
-                mySqlCmd.Parameters.AddWithValue("@ecsgp_etu_codepermanent", CodePerma);
+                mySqlCmd.Parameters.AddWithValue("@ecsgp_etu_codepermanent", codePerma);
 
                 //execution
-                int check = mySqlCmd.ExecuteNonQuery();
-                //si la requête modifie plus de 0 ligne on retourne true
-                if (check > 0)
+                if(codePerma != "")
                 {
-                    return true;
+                    int check = mySqlCmd.ExecuteNonQuery();
+                    //si la requête modifie plus de 0 ligne on retourne true
+                    if (check > 0)
+                    {
+                        return true;
+                    }
                 }
+                return false;
+                
             }
             finally 
             { 

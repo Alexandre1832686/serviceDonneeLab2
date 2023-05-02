@@ -103,10 +103,7 @@ namespace TestApi
             
             try
             {
-                Random rand = new Random();
-                test = courFacto.CreateCour("test", "test", 100);
-                
-                
+                test = courFacto.CreateCour("test46", "test46", 100);
             }
             catch (Exception e)
             {

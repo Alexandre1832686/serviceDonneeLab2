@@ -30,7 +30,7 @@ namespace Lab2ServiceDonnée.Controllers
             return ApiKeyFacto.checkApiKey(Key);
         }
 
-        [HttpPut]
+        [HttpGet]
         [Route("GenerateApiKey")]
         public string GenerateApiKey()
         {
@@ -119,7 +119,7 @@ namespace Lab2ServiceDonnée.Controllers
         [Route("AjoutEtuACour/{PrenomEnseignant}/{NomEnseignant}/{Sigle}")]
         public string AjoutEtuACour( string PrenomEnseignant, string NomEnseignant, string Sigle)
         {
-            if (CourFacto.ModifieProfCour(PrenomEnseignant, NomEnseignant, Sigle))
+            if (CourFacto.AddEtuToCour(PrenomEnseignant, NomEnseignant, Sigle))
             {
                 return "Modifié avec succès";
             }
