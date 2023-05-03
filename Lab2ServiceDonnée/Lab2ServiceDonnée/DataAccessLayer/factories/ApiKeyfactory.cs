@@ -7,7 +7,7 @@ namespace Lab2ServiceDonnée.DataAccessLayer.factories
     {
         public bool checkApiKey(string apikey)
         {
-            if(apikey.Length != 12)
+            if (apikey.Length != 12)
             {
                 return false;
             }
@@ -27,7 +27,7 @@ namespace Lab2ServiceDonnée.DataAccessLayer.factories
                 MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
                 mySqlCmd.CommandText = "SELECT * FROM apikeys WHERE value = @apikey";
                 mySqlCmd.Parameters.AddWithValue("@apikey", apikey);
-               
+
 
                 //execution et lecture de la requête
                 mySqlDataReader = mySqlCmd.ExecuteReader();
@@ -63,7 +63,7 @@ namespace Lab2ServiceDonnée.DataAccessLayer.factories
                 mySqlCmd.CommandText = "INSERT INTO apikeys (value) VALUES (@apikey); ";
 
                 mySqlCmd.Parameters.AddWithValue("@apikey", apikey);
-                
+
 
                 //execution
                 int check = mySqlCmd.ExecuteNonQuery();
@@ -86,5 +86,5 @@ namespace Lab2ServiceDonnée.DataAccessLayer.factories
             //si n'a pas de retour true retourne false
             return false;
         }
-    
+    }
 }
