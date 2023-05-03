@@ -1,5 +1,5 @@
-using Lab2ServiceDonnée.DataAccessLayer.factories;
-using Lab2ServiceDonnée.Model;
+using Lab2ServiceDonnÃ©e.DataAccessLayer.factories;
+using Lab2ServiceDonnÃ©e.Model;
 using MySql.Data.MySqlClient;
 
 namespace TestApi
