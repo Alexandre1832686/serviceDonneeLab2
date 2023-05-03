@@ -164,5 +164,9 @@ namespace Lab2ServiceDonnée.Controllers
             BuletinFacto = dal.BuletinFactory;
             ApiKeyFacto = dal.ApiKeyfactory;
         }
+
+
+
+        
     }
 }

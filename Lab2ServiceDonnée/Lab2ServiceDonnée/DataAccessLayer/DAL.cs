@@ -9,6 +9,7 @@ namespace Lab2ServiceDonnée.DataAccessLayer
         private CourFactory? _courFactory = null;
         private BuletinFactory? _buletinFactory= null;
         private ApiKeyfactory? _apiKeyfactory = null;
+        private TravailFactory? _travailFactory = null;
         public static string? ConnectionString { get; set; }
 
         //public var avec le SET
@@ -59,6 +60,18 @@ namespace Lab2ServiceDonnée.DataAccessLayer
                 }
 
                 return _apiKeyfactory;
+            }
+        }
+        public TravailFactory TravailFactory
+        {
+            get
+            {
+                if (_travailFactory == null)
+                {
+                    _travailFactory = new TravailFactory();
+                }
+
+                return _travailFactory;
             }
         }
 
